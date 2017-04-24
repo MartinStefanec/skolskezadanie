@@ -32,7 +32,7 @@ main(int argc, char *argv[]){
 //			printf("n=%d ",n);
 //		printf("%d ",presiel);
 }
-	printf("pocet postupnosti: %d\n",n);
+	printf("Pocet postupnosti: %d\n",n);
 //	for(i=0;i<n;i++) printf("%d-ta postupnost: %d\n ",i+1,dlzky[i]);
 
 	//	printf("%d ",n);
@@ -40,7 +40,7 @@ main(int argc, char *argv[]){
 	pocetfloatov=pocetfloatov+dlzky[i];
 	}
 	
-printf("celkovy pocet floatov: %d\n",pocetfloatov);
+printf("Celkovy pocet floatov: %d\n",pocetfloatov);
 	lseek(subor, 0, SEEK_SET);
 	
 	float *pole[pocetfloatov];
@@ -66,20 +66,31 @@ printf("celkovy pocet floatov: %d\n",pocetfloatov);
 		sucet=0;
 		medzipocet=medzipocet+dlzky[i-1];
 		for(j=medzipocet;j<medzipocet+dlzky[i];j++){
-			printf("%d:",j+1);
+//			printf("%d:",j+1);
 			sucet=sucet+*pole[j];
-			printf("%f ", sucet);
+//			printf("%f ", sucet);
+			
 		}
 		priemery[i]=sucet/dlzky[i];
-		printf("\n%f\n",priemery[i]);
+		printf("%d:%f\t",i+1,priemery[i]);
 	}
-	sucet=0;	
-	printf("Priemer priemerov postupnosti: ");
+	sucet=0;
+	medzipocet=0;	
+	printf("\nPriemer priemerov postupnosti: ");
 	for(i=0;i<n;i++){
 		sucet=sucet+priemery[i];
 	}
 	priemer=sucet/n;
 	printf("%f\n",priemer);
+	printf("Jednotlive postupnosti:");
+	for(i=0;i<n;i++){
+		printf("\n%d. postupnost: ",i+1);
+		medzipocet=medzipocet+dlzky[i-1];
+		for(j=medzipocet;j<medzipocet+dlzky[i];j++){
+			printf("%f, ",*pole[j]);
+		}
+		
+	}
 	
 	
 	close(subor);
