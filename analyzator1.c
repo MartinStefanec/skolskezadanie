@@ -11,9 +11,9 @@
 
 	
 main(int argc, char *argv[]){
-	int subor,velkost,pocitadlo,presiel=0,i,j;
+	int subor,velkost,n,presiel=0,i,k,j,pocetfloatov,medzipocet=0,kolko;
 	unsigned char cislo;
-	float **polesmernikov;	
+	float number;	
 	if(argc!=2){
 		printf("Expected 1 argument");
 		return 0;
@@ -21,28 +21,50 @@ main(int argc, char *argv[]){
 	subor=open(argv[1], O_RDONLY|O_BINARY,S_IWUSR);	
 	velkost = lseek(subor, 0, SEEK_END);
 	lseek(subor, 0, SEEK_SET);
-	printf("%d \n",velkost);
-	int pocetfloatov[velkost/40];
+//	printf("%d \n",velkost);
+	int dlzky[velkost/40];
 	while(presiel<velkost){
 		read(subor,&cislo,sizeof(unsigned char));
 		lseek(subor,sizeof(float)*cislo,SEEK_CUR);
-		pocetfloatov[pocitadlo]=cislo;
-		pocitadlo++;
+		dlzky[n]=cislo;
+		n++;
 		presiel=presiel+sizeof(float)*cislo+1;
-			//printf("%d ",pocitadlo);
-		//	printf("%d ",presiel);
+//			printf("n=%d ",n);
+//		printf("%d ",presiel);
 }
-	printf("%d ",pocitadlo);
-//	for(i=0;i<pocitadlo;i++) printf("%d-ta postupnost: %d\n ",i,pocetfloatov[i]);
-int pocetvpost[pocitadlo];
-	
-	while(j<pocitadlo){
-		read(subor,&cislo,sizeof(unsigned char));
-		lseek(subor,sizeof(float)*cislo,SEEK_CUR);
-		pocetfloatov[j]=cislo;
-		j++;
-}
+	printf("pocet postupnosti: %d\n",n);
+//	for(i=0;i<n;i++) printf("%d-ta postupnost: %d\n ",i+1,dlzky[i]);
 
+	//	printf("%d ",n);
+	for(i=0;i<n;i++) {
+	pocetfloatov=pocetfloatov+dlzky[i];
+	}
+	
+printf("celkovy pocet floatov: %d\n",pocetfloatov);
+	lseek(subor, 0, SEEK_SET);
+	float *pole[pocetfloatov];
+	for(i=0;i<pocetfloatov;i++)	pole[i]=malloc(sizeof(float));
+	for(i=0;i<n;i++){
+		lseek(subor, 1, SEEK_CUR);
+		 medzipocet=medzipocet+dlzky[i-1];
+		for(j=0;j<dlzky[i];j++){
+			read(subor,&number,sizeof(float));
+			
+//				printf("%d",medzipocet);
+				kolko=medzipocet+j;
+				*pole[kolko]=number;
+//				printf("%f ",number);
+			}
+	}
+	
+	for(i=0;i<pocetfloatov;i++) printf("%f   ",*pole[i]);
+	
+
+		
+	
+	
+	
+	close(subor);
 	
 	
 }
