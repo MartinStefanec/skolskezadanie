@@ -29,15 +29,15 @@ main(int argc, char *argv[]){
 	subor=open(argv[1], O_RDWR|O_CREAT|O_BINARY,S_IWUSR);	
 	for (i=0;i<n;i++){
 		dlzka=10+rand()%11;
-		printf("%d ",dlzka);
+//		printf("%d ",dlzka);
 		write(subor,&dlzka,sizeof(unsigned char));
 		for (j=0;j<dlzka;j++){
 //			cislo=rand()/(float)(RAND_MAX);
 			cislo=rand()%20;
-			printf("%f ",cislo);	
+//			printf("%f ",cislo);	
 			write(subor,&cislo,sizeof(float));
 		}
-		printf("\n");
+//		printf("\n");
 	}	
 	close(subor);
 	
