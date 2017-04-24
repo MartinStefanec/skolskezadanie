@@ -5,7 +5,6 @@
 #include<string.h>
 #include<time.h>
 #include<fcntl.h>
-#include<time.h>
 #include<sys/stat.h>
 #include<unistd.h>
 
@@ -17,7 +16,7 @@ main(int argc, char *argv[]){
 	n=atoi(argv[2]);
 	int subor;
 	int i,j;
-	int dlzka;
+	unsigned char dlzka;
 	float cislo;
 	if(strspn(argv[2], "0123456789") != strlen(argv[2])) {
 	printf("Expected only number");
@@ -27,16 +26,20 @@ main(int argc, char *argv[]){
 		printf("Expected 2 arguments");
 		return 0;
 	}
-	subor=open(argv[1],O_RDWR|O_CREAT|O_BINARY,S_IWUSR);	
+	subor=open(argv[1], O_RDWR|O_CREAT|O_BINARY,S_IWUSR);	
 	for (i=0;i<n;i++){
-		dlzka==10+rand()%11;
-		write(subor,&dlzka,sizeof(int));
-		for (i=0;j<dlzka;j++){
-			cislo=rand()/(float)(RAND_MAX);	
+		dlzka=10+rand()%11;
+		printf("%d ",dlzka);
+		write(subor,&dlzka,sizeof(unsigned char));
+		for (j=0;j<dlzka;j++){
+//			cislo=rand()/(float)(RAND_MAX);
+			cislo=rand()%20;
+			printf("%f ",cislo);	
 			write(subor,&cislo,sizeof(float));
 		}
+		printf("\n");
 	}	
 	close(subor);
-
+	
 	
 }
