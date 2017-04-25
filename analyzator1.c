@@ -27,7 +27,10 @@ main(int argc, char *argv[]){
 	lseek(subor, 0, SEEK_SET);
 	int dlzky[velkost/40];
 	while(presiel<velkost){
-		read(subor,&cislo,sizeof(unsigned char));
+		if(read(subor,&cislo,sizeof(unsigned char))==-1) {
+			printf("Unable to read");
+			return 0;
+		}
 		lseek(subor,sizeof(float)*cislo,SEEK_CUR);
 		dlzky[n]=cislo;
 		n++;
@@ -41,15 +44,23 @@ main(int argc, char *argv[]){
 printf("Celkovy pocet floatov: %d\n",pocetfloatov);
 	lseek(subor, 0, SEEK_SET);
 	float *pole[pocetfloatov];
-	for(i=0;i<pocetfloatov;i++)	pole[i]=malloc(sizeof(float));
+	for(i=0;i<pocetfloatov;i++){
+		pole[i]=malloc(sizeof(float));
+		if(pole[i]==0) {
+			printf("Unable to allocate");
+			return 0;
+		}
+	}
 	for(i=0;i<n;i++){
 		lseek(subor, 1, SEEK_CUR);
 		 medzipocet=medzipocet+dlzky[i-1];
 		for(j=0;j<dlzky[i];j++){
-			read(subor,&number,sizeof(float));
+			if(read(subor,&number,sizeof(float))==-1) {
+			printf("Unable to read");
+			return 0;
+		}
 				kolko=medzipocet+j;
 				*pole[kolko]=number;
-//				printf("%f ",number);
 			}
 	}
 	
@@ -83,7 +94,9 @@ printf("Celkovy pocet floatov: %d\n",pocetfloatov);
 	}
 	for(i=0;i<pocetfloatov;i++)	free(pole[i]);
 	
-	close(subor);
-	
+	if(close(subor)==-1) {
+			printf("Unable to close file");
+			return 0;
+		}
 	
 }
