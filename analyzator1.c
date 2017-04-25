@@ -13,12 +13,16 @@
 main(int argc, char *argv[]){
 	int subor,velkost,n,presiel=0,i,k,j,pocetfloatov,medzipocet=0,kolko;
 	unsigned char cislo;
-	float number,sucet,medzisucet,priemer;	
+	float number,sucet,priemer;	
 	if(argc!=2){
 		printf("Expected 1 argument");
 		return 0;
 	}
-	subor=open(argv[1], O_RDONLY|O_BINARY,S_IWUSR);	
+	subor=open(argv[1], O_RDONLY|O_BINARY,S_IWUSR);
+	if(subor<0) {
+		printf("Wrong filename, Try again");
+		return 0;
+	}	
 	velkost = lseek(subor, 0, SEEK_END);
 	lseek(subor, 0, SEEK_SET);
 //	printf("%d \n",velkost);
@@ -91,7 +95,7 @@ printf("Celkovy pocet floatov: %d\n",pocetfloatov);
 		}
 		
 	}
-	
+	for(i=0;i<pocetfloatov;i++)	free(pole[i]);
 	
 	close(subor);
 	
