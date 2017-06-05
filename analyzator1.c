@@ -9,12 +9,10 @@
 #include<unistd.h>
 
 main(int argc, char *argv[]){
-	int subor,velkost,n,presiel,i=0,k,j,pocetfloatov=0,medzipocet=0,kolko;
+	int subor,velkost,n,presiel=0,i=0,k,j,pocetfloatov=0,medzipocet=0,kolko,*dlzky;
 	unsigned char cislo;
 	float number,sucet,priemer,*pole,*priemery;	
-	int *dlzky;
 	
-	presiel=0;
 	if(argc!=2){
 		printf("Expected 1 argument");
 		return 0;
@@ -22,7 +20,7 @@ main(int argc, char *argv[]){
 	
 	subor=open(argv[1], O_RDONLY|O_BINARY,S_IWUSR);
 	if(subor<0) {
-		printf("Wrong filename, Try again");
+		printf("Unable to open, Try again");
 		return 0;
 	}
 		
@@ -83,6 +81,10 @@ main(int argc, char *argv[]){
 	
 	medzipocet=0;
 	priemery=malloc(n*sizeof(float));
+	if(priemery==NULL) {
+		printf("Unable to allocate");
+		return 0;
+	}
 	printf("Priemery jednotlivych postupnosti:\n");
 	for(i=0;i<n;i++){
 		sucet=0;
