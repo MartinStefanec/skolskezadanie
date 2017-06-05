@@ -14,17 +14,17 @@ main(int argc, char *argv[]){
 	float cislo;
 	
 	srand(time(NULL));
+	if(argc!=3){
+		printf("Expected 2 arguments");
+		return 0;
+	}
+	
 	if(strspn(argv[2], "0123456789") != strlen(argv[2])) {
 		printf("Expected only number");
 		return 0;
     }
     
     n=atoi(argv[2]);
-	if(argc!=3){
-		printf("Expected 2 arguments");
-		return 0;
-	}
-	
 	subor=open(argv[1], O_RDWR|O_CREAT|O_BINARY,S_IWUSR);
 	if(subor<0) {
 		printf("Unable to open file");
