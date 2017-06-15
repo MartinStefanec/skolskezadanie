@@ -9,7 +9,7 @@
 #include<unistd.h>
 
 main(int argc, char *argv[]){
-	int subor,velkost,n,presiel=0,i=0,k,j,pocetfloatov=0,medzipocet=0,kolko,*dlzky;
+	int subor,velkost,n=0,presiel=0,i=0,k,j,pocetfloatov=0,medzipocet=0,kolko,*dlzky;
 	unsigned char cislo;
 	float number,sucet,priemer,*pole,*priemery;	
 	
@@ -65,7 +65,7 @@ main(int argc, char *argv[]){
 	}
 	
 	for(i=0;i<n;i++){
-		lseek(subor, 1, SEEK_CUR);
+		lseek(subor, sizeof(unsigned char), SEEK_CUR);
 		for(j=0;j<dlzky[i];j++){
 			if(read(subor,&number,sizeof(float))==-1) {
 				printf("Unable to read");
